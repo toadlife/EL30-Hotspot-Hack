@@ -10,8 +10,8 @@ I used Tortel1210's EI22 zip as a source for this.
 
 NOTES:
 
-Instead of copying over induvidual changes from WimaxService smali
-file it would probably be easier just to copy the entire modified file,
+Instead of copying over induvidual changes from WimaxService$5.smali
+it would probably be easier just to copy the entire modified file,
 as it looks like the file was brought forward from a previous build,
 and there are a bunch of little trivial changes that don't have 
 anything to do with the actual hack.
