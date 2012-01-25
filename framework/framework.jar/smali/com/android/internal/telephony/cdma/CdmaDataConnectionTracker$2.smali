@@ -742,7 +742,7 @@
 
     move/from16 v1, v20
 
-    if-eq v0, v1, :cond_0
+    if-eq v0, v0, :cond_0
 
     .line 252
     const/16 v22, 0x3

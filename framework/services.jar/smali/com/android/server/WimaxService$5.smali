@@ -181,7 +181,7 @@
 
     move-result v4
 
-    if-eqz v4, :cond_f
+    if-eqz v4, :cond_9
 
 
     iget-object v4, p0, Lcom/android/server/WimaxService$5;->this$0:Lcom/android/server/WimaxService;
@@ -267,20 +267,6 @@
 
     move-result-object v4
 
-    const-string v5, " mbUSBTethered : "
-
-    invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v4
-
-    invoke-static {}, Lcom/android/server/WimaxService;->access$1200()Z
-
-    move-result v5
-
-    invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Z)Ljava/lang/StringBuilder;
-
-    move-result-object v4
-
     invoke-virtual {v4}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
 
     move-result-object v4
@@ -291,20 +277,23 @@
     :cond_6
     iget-object v4, p0, Lcom/android/server/WimaxService$5;->this$0:Lcom/android/server/WimaxService;
 
+    invoke-virtual {v4}, Lcom/android/server/WimaxService;->getWimaxMode()I
+
+    move-result v4
+
+    if-ne v4, v7, :cond_7
+
+
+    iget-object v4, p0, Lcom/android/server/WimaxService$5;->this$0:Lcom/android/server/WimaxService;
+
     #getter for: Lcom/android/server/WimaxService;->m_nPluggedType:I
     invoke-static {v4}, Lcom/android/server/WimaxService;->access$1100(Lcom/android/server/WimaxService;)I
 
     move-result v4
 
-    if-eq v4, v9, :cond_b
+    if-eq v4, v9, :cond_8
 
-    if-ne v2, v9, :cond_b
-
-
-    iget-object v4, p0, Lcom/android/server/WimaxService$5;->this$0:Lcom/android/server/WimaxService;
-
-    #setter for: Lcom/android/server/WimaxService;->m_nPluggedType:I
-    invoke-static {v4, v2}, Lcom/android/server/WimaxService;->access$1102(Lcom/android/server/WimaxService;I)I
+    if-ne v2, v9, :cond_8
 
 
     iget-object v4, p0, Lcom/android/server/WimaxService$5;->this$0:Lcom/android/server/WimaxService;
@@ -324,148 +313,16 @@
 
 
     :cond_7
+    :goto_1
     iget-object v4, p0, Lcom/android/server/WimaxService$5;->this$0:Lcom/android/server/WimaxService;
 
-    invoke-virtual {v4}, Lcom/android/server/WimaxService;->getWimaxMode()I
-
-    move-result v4
-
-    if-ne v4, v7, :cond_8
-
-
-    const-string v4, "WimaxService"
-
-    const-string v4, "discard - already tethered mode"
-
-    invoke-static {v6, v4}, Landroid/util/Log;->w(Ljava/lang/String;Ljava/lang/String;)I
+    #setter for: Lcom/android/server/WimaxService;->m_nPluggedType:I
+    invoke-static {v4, v2}, Lcom/android/server/WimaxService;->access$1102(Lcom/android/server/WimaxService;I)I
 
     goto/16 :goto_0
 
 
     :cond_8
-    invoke-static {}, Lcom/android/server/WimaxService;->access$1200()Z
-
-    move-result v4
-
-    if-eqz v4, :cond_0
-
-    iget-object v4, p0, Lcom/android/server/WimaxService$5;->this$0:Lcom/android/server/WimaxService;
-
-    invoke-virtual {v4}, Lcom/android/server/WimaxService;->getWimaxEnabledStatus()I
-
-    move-result v4
-
-    if-ne v4, v10, :cond_0
-
-
-    iget-object v4, p0, Lcom/android/server/WimaxService$5;->this$0:Lcom/android/server/WimaxService;
-
-    invoke-virtual {v4, v7, v7}, Lcom/android/server/WimaxService;->setWimaxMode(IZ)I
-
-
-    iget-object v4, p0, Lcom/android/server/WimaxService$5;->this$0:Lcom/android/server/WimaxService;
-
-    #getter for: Lcom/android/server/WimaxService;->mWimaxStateTracker:Landroid/net/wimax/WimaxStateTracker;
-    invoke-static {v4}, Lcom/android/server/WimaxService;->access$600(Lcom/android/server/WimaxService;)Landroid/net/wimax/WimaxStateTracker;
-
-    move-result-object v4
-
-    invoke-virtual {v4}, Landroid/net/wimax/WimaxStateTracker;->clearRetryFlag()V
-
-
-    iget-object v4, p0, Lcom/android/server/WimaxService$5;->this$0:Lcom/android/server/WimaxService;
-
-    invoke-virtual {v4}, Lcom/android/server/WimaxService;->getWimaxState()Landroid/net/wimax/WimaxState;
-
-    move-result-object v4
-
-    sget-object v5, Landroid/net/wimax/WimaxState;->DISCONNECTED:Landroid/net/wimax/WimaxState;
-
-    if-ne v4, v5, :cond_9
-
-
-    const-string v4, "WimaxService"
-
-    const-string v4, "it will connect as tethered mode"
-
-    invoke-static {v6, v4}, Landroid/util/Log;->i(Ljava/lang/String;Ljava/lang/String;)I
-
-
-    iget-object v4, p0, Lcom/android/server/WimaxService$5;->this$0:Lcom/android/server/WimaxService;
-
-    invoke-virtual {v4, v7}, Lcom/android/server/WimaxService;->startScan(Z)Z
-
-    goto/16 :goto_0
-
-
-    :cond_9
-    iget-object v4, p0, Lcom/android/server/WimaxService$5;->this$0:Lcom/android/server/WimaxService;
-
-    invoke-virtual {v4}, Lcom/android/server/WimaxService;->getWimaxState()Landroid/net/wimax/WimaxState;
-
-    move-result-object v4
-
-    sget-object v5, Landroid/net/wimax/WimaxState;->SCANNING:Landroid/net/wimax/WimaxState;
-
-    if-eq v4, v5, :cond_a
-
-    iget-object v4, p0, Lcom/android/server/WimaxService$5;->this$0:Lcom/android/server/WimaxService;
-
-    invoke-virtual {v4}, Lcom/android/server/WimaxService;->getWimaxState()Landroid/net/wimax/WimaxState;
-
-    move-result-object v4
-
-    sget-object v5, Landroid/net/wimax/WimaxState;->READY:Landroid/net/wimax/WimaxState;
-
-    if-eq v4, v5, :cond_a
-
-    iget-object v4, p0, Lcom/android/server/WimaxService$5;->this$0:Lcom/android/server/WimaxService;
-
-    invoke-virtual {v4}, Lcom/android/server/WimaxService;->getWimaxState()Landroid/net/wimax/WimaxState;
-
-    move-result-object v4
-
-    sget-object v5, Landroid/net/wimax/WimaxState;->CONNECTING:Landroid/net/wimax/WimaxState;
-
-    if-eq v4, v5, :cond_a
-
-    iget-object v4, p0, Lcom/android/server/WimaxService$5;->this$0:Lcom/android/server/WimaxService;
-
-    invoke-virtual {v4}, Lcom/android/server/WimaxService;->getWimaxState()Landroid/net/wimax/WimaxState;
-
-    move-result-object v4
-
-    sget-object v5, Landroid/net/wimax/WimaxState;->OBTAINING_IPADDR:Landroid/net/wimax/WimaxState;
-
-    if-eq v4, v5, :cond_a
-
-    iget-object v4, p0, Lcom/android/server/WimaxService$5;->this$0:Lcom/android/server/WimaxService;
-
-    invoke-virtual {v4}, Lcom/android/server/WimaxService;->getWimaxState()Landroid/net/wimax/WimaxState;
-
-    move-result-object v4
-
-    sget-object v5, Landroid/net/wimax/WimaxState;->CONNECTED:Landroid/net/wimax/WimaxState;
-
-    if-ne v4, v5, :cond_0
-
-
-    :cond_a
-    const-string v4, "WimaxService"
-
-    const-string v4, "it will disconnect for re-connecting as tethered mode"
-
-    invoke-static {v6, v4}, Landroid/util/Log;->i(Ljava/lang/String;Ljava/lang/String;)I
-
-
-    iget-object v4, p0, Lcom/android/server/WimaxService$5;->this$0:Lcom/android/server/WimaxService;
-
-    invoke-virtual {v4}, Lcom/android/server/WimaxService;->disconnect()Z
-
-    goto/16 :goto_0
-
-
-    :cond_b
     iget-object v4, p0, Lcom/android/server/WimaxService$5;->this$0:Lcom/android/server/WimaxService;
 
     #getter for: Lcom/android/server/WimaxService;->m_nPluggedType:I
@@ -473,15 +330,9 @@
 
     move-result v4
 
-    if-ne v4, v9, :cond_0
+    if-ne v4, v9, :cond_7
 
-    if-eq v2, v9, :cond_0
-
-
-    iget-object v4, p0, Lcom/android/server/WimaxService$5;->this$0:Lcom/android/server/WimaxService;
-
-    #setter for: Lcom/android/server/WimaxService;->m_nPluggedType:I
-    invoke-static {v4, v2}, Lcom/android/server/WimaxService;->access$1102(Lcom/android/server/WimaxService;I)I
+    if-eq v2, v9, :cond_7
 
 
     const-string v4, "WimaxService"
@@ -491,107 +342,14 @@
     invoke-static {v6, v4}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
 
 
-    invoke-static {v8}, Lcom/android/server/WimaxService;->access$1202(Z)Z
-
-
-    iget-object v4, p0, Lcom/android/server/WimaxService$5;->this$0:Lcom/android/server/WimaxService;
-
-    invoke-virtual {v4}, Lcom/android/server/WimaxService;->getWimaxMode()I
-
-    move-result v4
-
-    if-ne v4, v7, :cond_e
-
-
     iget-object v4, p0, Lcom/android/server/WimaxService$5;->this$0:Lcom/android/server/WimaxService;
 
     invoke-virtual {v4}, Lcom/android/server/WimaxService;->getWimaxEnabledStatus()I
 
     move-result v4
 
-    if-ne v4, v10, :cond_0
+    if-ne v4, v10, :cond_7
 
-
-    iget-object v4, p0, Lcom/android/server/WimaxService$5;->this$0:Lcom/android/server/WimaxService;
-
-    invoke-virtual {v4, v7, v8}, Lcom/android/server/WimaxService;->setWimaxMode(IZ)I
-
-
-    iget-object v4, p0, Lcom/android/server/WimaxService$5;->this$0:Lcom/android/server/WimaxService;
-
-    #getter for: Lcom/android/server/WimaxService;->mWimaxStateTracker:Landroid/net/wimax/WimaxStateTracker;
-    invoke-static {v4}, Lcom/android/server/WimaxService;->access$600(Lcom/android/server/WimaxService;)Landroid/net/wimax/WimaxStateTracker;
-
-    move-result-object v4
-
-    invoke-virtual {v4}, Landroid/net/wimax/WimaxStateTracker;->clearRetryFlag()V
-
-
-    iget-object v4, p0, Lcom/android/server/WimaxService$5;->this$0:Lcom/android/server/WimaxService;
-
-    invoke-virtual {v4}, Lcom/android/server/WimaxService;->getWimaxState()Landroid/net/wimax/WimaxState;
-
-    move-result-object v4
-
-    sget-object v5, Landroid/net/wimax/WimaxState;->DISCONNECTED:Landroid/net/wimax/WimaxState;
-
-    if-ne v4, v5, :cond_c
-
-
-    const-string v4, "WimaxService"
-
-    const-string v4, "it will connect as normal mode"
-
-    invoke-static {v6, v4}, Landroid/util/Log;->i(Ljava/lang/String;Ljava/lang/String;)I
-
-
-    iget-object v4, p0, Lcom/android/server/WimaxService$5;->this$0:Lcom/android/server/WimaxService;
-
-    invoke-virtual {v4, v7}, Lcom/android/server/WimaxService;->startScan(Z)Z
-
-    goto/16 :goto_0
-
-
-    :cond_c
-    iget-object v4, p0, Lcom/android/server/WimaxService$5;->this$0:Lcom/android/server/WimaxService;
-
-    invoke-virtual {v4}, Lcom/android/server/WimaxService;->getWimaxState()Landroid/net/wimax/WimaxState;
-
-    move-result-object v4
-
-    sget-object v5, Landroid/net/wimax/WimaxState;->SCANNING:Landroid/net/wimax/WimaxState;
-
-    if-eq v4, v5, :cond_d
-
-    iget-object v4, p0, Lcom/android/server/WimaxService$5;->this$0:Lcom/android/server/WimaxService;
-
-    invoke-virtual {v4}, Lcom/android/server/WimaxService;->getWimaxState()Landroid/net/wimax/WimaxState;
-
-    move-result-object v4
-
-    sget-object v5, Landroid/net/wimax/WimaxState;->READY:Landroid/net/wimax/WimaxState;
-
-    if-eq v4, v5, :cond_d
-
-    iget-object v4, p0, Lcom/android/server/WimaxService$5;->this$0:Lcom/android/server/WimaxService;
-
-    invoke-virtual {v4}, Lcom/android/server/WimaxService;->getWimaxState()Landroid/net/wimax/WimaxState;
-
-    move-result-object v4
-
-    sget-object v5, Landroid/net/wimax/WimaxState;->CONNECTING:Landroid/net/wimax/WimaxState;
-
-    if-eq v4, v5, :cond_d
-
-    iget-object v4, p0, Lcom/android/server/WimaxService$5;->this$0:Lcom/android/server/WimaxService;
-
-    invoke-virtual {v4}, Lcom/android/server/WimaxService;->getWimaxState()Landroid/net/wimax/WimaxState;
-
-    move-result-object v4
-
-    sget-object v5, Landroid/net/wimax/WimaxState;->OBTAINING_IPADDR:Landroid/net/wimax/WimaxState;
-
-    if-eq v4, v5, :cond_d
 
     iget-object v4, p0, Lcom/android/server/WimaxService$5;->this$0:Lcom/android/server/WimaxService;
 
@@ -601,13 +359,12 @@
 
     sget-object v5, Landroid/net/wimax/WimaxState;->CONNECTED:Landroid/net/wimax/WimaxState;
 
-    if-ne v4, v5, :cond_0
+    if-ne v4, v5, :cond_7
 
 
-    :cond_d
     const-string v4, "WimaxService"
 
-    const-string v4, "it will disconnect for re-connecting as normal mode"
+    const-string v4, "it will be disconnect to re-connect as normal mode"
 
     invoke-static {v6, v4}, Landroid/util/Log;->i(Ljava/lang/String;Ljava/lang/String;)I
 
@@ -616,40 +373,40 @@
 
     invoke-virtual {v4}, Lcom/android/server/WimaxService;->disconnect()Z
 
-    goto/16 :goto_0
+
+    invoke-static {v8}, Lcom/android/server/WimaxService;->access$1202(Z)Z
 
 
-    :cond_e
-    const-string v4, "WimaxService"
+    iget-object v4, p0, Lcom/android/server/WimaxService$5;->this$0:Lcom/android/server/WimaxService;
 
-    const-string v4, "discard - already NOT tethered mode"
+    invoke-static {}, Lcom/android/server/WimaxService;->access$1200()Z
 
-    invoke-static {v6, v4}, Landroid/util/Log;->w(Ljava/lang/String;Ljava/lang/String;)I
+    move-result v5
 
-    goto/16 :goto_0
+    invoke-virtual {v4, v7, v5}, Lcom/android/server/WimaxService;->setWimaxMode(IZ)I
+
+    goto :goto_1
 
 
     .end local v2           #nPluggedType:I
-    :cond_f
+    :cond_9
     const-string v4, "android.net.wifi.WIFI_AP_STATE_CHANGED"
 
     invoke-virtual {v0, v4}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
 
     move-result v4
 
-    if-eqz v4, :cond_18
+    if-eqz v4, :cond_f
 
 
-    const-string v4, "wifi_state"
+    const-string v4, "change_realm"
 
-    const/4 v5, 0x4
-
-    invoke-virtual {p2, v4, v5}, Landroid/content/Intent;->getIntExtra(Ljava/lang/String;I)I
+    invoke-virtual {p2, v4, v8}, Landroid/content/Intent;->getBooleanExtra(Ljava/lang/String;Z)Z
 
     move-result v1
 
 
-    .local v1, nApState:I
+    .local v1, bExtra:Z
     iget-object v4, p0, Lcom/android/server/WimaxService$5;->this$0:Lcom/android/server/WimaxService;
 
     #getter for: Lcom/android/server/WimaxService;->m_bLog:Z
@@ -657,7 +414,7 @@
 
     move-result v4
 
-    if-eqz v4, :cond_10
+    if-eqz v4, :cond_a
 
     const-string v4, "WimaxService"
 
@@ -665,13 +422,13 @@
 
     invoke-direct {v4}, Ljava/lang/StringBuilder;-><init>()V
 
-    const-string v5, "WIFI_AP_STATE_CHANGED_ACTION = "
+    const-string v5, "WIFIAP_WIMAX_REALM_CHANGE = "
 
     invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     move-result-object v4
 
-    invoke-virtual {v4, v1}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+    invoke-virtual {v4, v1}, Ljava/lang/StringBuilder;->append(Z)Ljava/lang/StringBuilder;
 
     move-result-object v4
 
@@ -682,28 +439,36 @@
     invoke-static {v6, v4}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
 
 
-    :cond_10
-    packed-switch v1, :pswitch_data_0
+    :cond_a
+    if-eqz v1, :cond_0
 
-
-    :pswitch_0
-    const-string v4, "WimaxService"
-
-    const-string v4, "discard - WIFI_AP_STATE_CHANGED_ACTION intent."
-
-    invoke-static {v6, v4}, Landroid/util/Log;->w(Ljava/lang/String;Ljava/lang/String;)I
-
-    goto/16 :goto_0
-
-
-    :pswitch_1
     iget-object v4, p0, Lcom/android/server/WimaxService$5;->this$0:Lcom/android/server/WimaxService;
 
     invoke-virtual {v4}, Lcom/android/server/WimaxService;->getWimaxMode()I
 
     move-result v4
 
-    if-eq v4, v9, :cond_11
+    if-ne v4, v7, :cond_0
+
+
+    const-string v4, "WimaxService"
+
+    const-string v4, "discard - WIFIAP_WIMAX_REALM_CHANGE intent. current mode is wimax tethered."
+
+    invoke-static {v6, v4}, Landroid/util/Log;->w(Ljava/lang/String;Ljava/lang/String;)I
+
+    goto/16 :goto_0
+
+
+    if-nez v1, :cond_b
+
+    iget-object v4, p0, Lcom/android/server/WimaxService$5;->this$0:Lcom/android/server/WimaxService;
+
+    invoke-virtual {v4}, Lcom/android/server/WimaxService;->getWimaxMode()I
+
+    move-result v4
+
+    if-eq v4, v9, :cond_b
 
     iget-object v4, p0, Lcom/android/server/WimaxService$5;->this$0:Lcom/android/server/WimaxService;
 
@@ -713,46 +478,22 @@
 
     const/4 v5, 0x4
 
-    if-eq v4, v5, :cond_11
+    if-eq v4, v5, :cond_b
 
 
     const-string v4, "WimaxService"
 
-    const-string v4, "discard - WIFI_AP_STATE_CHANGED_ACTION intent."
+    const-string v4, "discard - WIFIAP_WIMAX_REALM_CHANGE intent."
 
     invoke-static {v6, v4}, Landroid/util/Log;->w(Ljava/lang/String;Ljava/lang/String;)I
 
     goto/16 :goto_0
 
 
-    :pswitch_2
+    :cond_b
     iget-object v4, p0, Lcom/android/server/WimaxService$5;->this$0:Lcom/android/server/WimaxService;
 
-    invoke-virtual {v4}, Lcom/android/server/WimaxService;->getWimaxMode()I
-
-    move-result v4
-
-    if-ne v4, v7, :cond_11
-
-
-    const-string v4, "WimaxService"
-
-    const-string v4, "discard - WIFI_AP_STATE_CHANGED_ACTION intent. current mode is wimax tethered."
-
-    invoke-static {v6, v4}, Landroid/util/Log;->w(Ljava/lang/String;Ljava/lang/String;)I
-
-    goto/16 :goto_0
-
-
-    :cond_11
-    iget-object v4, p0, Lcom/android/server/WimaxService$5;->this$0:Lcom/android/server/WimaxService;
-
-    if-ne v1, v10, :cond_13
-
-    move v5, v7
-
-    :goto_1
-    invoke-virtual {v4, v9, v5}, Lcom/android/server/WimaxService;->setWimaxMode(IZ)I
+    invoke-virtual {v4, v9, v1}, Lcom/android/server/WimaxService;->setWimaxMode(IZ)I
 
 
     iget-object v4, p0, Lcom/android/server/WimaxService$5;->this$0:Lcom/android/server/WimaxService;
@@ -761,17 +502,7 @@
 
     move-result v4
 
-    if-ne v4, v10, :cond_12
-
-
-    iget-object v4, p0, Lcom/android/server/WimaxService$5;->this$0:Lcom/android/server/WimaxService;
-
-    #getter for: Lcom/android/server/WimaxService;->mWimaxStateTracker:Landroid/net/wimax/WimaxStateTracker;
-    invoke-static {v4}, Lcom/android/server/WimaxService;->access$600(Lcom/android/server/WimaxService;)Landroid/net/wimax/WimaxStateTracker;
-
-    move-result-object v4
-
-    invoke-virtual {v4}, Landroid/net/wimax/WimaxStateTracker;->clearRetryFlag()V
+    if-ne v4, v10, :cond_c
 
 
     iget-object v4, p0, Lcom/android/server/WimaxService$5;->this$0:Lcom/android/server/WimaxService;
@@ -782,28 +513,26 @@
 
     sget-object v5, Landroid/net/wimax/WimaxState;->DISCONNECTED:Landroid/net/wimax/WimaxState;
 
-    if-ne v4, v5, :cond_15
+    if-ne v4, v5, :cond_d
 
-
-    if-ne v1, v10, :cond_14
+    if-eqz v1, :cond_d
 
 
     const-string v4, "WimaxService"
 
-    const-string v4, "it will be start scan to re-connect as backhaul mode"
+    const-string v4, "it will be start scan to connect as backhaul mode"
 
     invoke-static {v6, v4}, Landroid/util/Log;->i(Ljava/lang/String;Ljava/lang/String;)I
 
 
-    :goto_2
     iget-object v4, p0, Lcom/android/server/WimaxService$5;->this$0:Lcom/android/server/WimaxService;
 
-    invoke-virtual {v4, v7}, Lcom/android/server/WimaxService;->startScan(Z)Z
+    invoke-virtual {v4, v8}, Lcom/android/server/WimaxService;->startScan(Z)Z
 
 
-    .end local v1           #nApState:I
-    :cond_12
-    :goto_3
+    .end local v1           #bExtra:Z
+    :cond_c
+    :goto_2
     iget-object v4, p0, Lcom/android/server/WimaxService$5;->this$0:Lcom/android/server/WimaxService;
 
     #calls: Lcom/android/server/WimaxService;->updateWimaxStatus()V
@@ -811,36 +540,10 @@
 
     goto/16 :goto_0
 
-    .restart local v1       #nApState:I
-    :cond_13
-    move v5, v8
 
-
-    goto :goto_1
-
-
-    :cond_14
-    const-string v4, "WimaxService"
-
-    const-string v4, "it will be start scan to re-connect as normal mode"
-
-    invoke-static {v6, v4}, Landroid/util/Log;->i(Ljava/lang/String;Ljava/lang/String;)I
-
-
-    iget-object v4, p0, Lcom/android/server/WimaxService$5;->this$0:Lcom/android/server/WimaxService;
-
-    #getter for: Lcom/android/server/WimaxService;->mWimaxStateTracker:Landroid/net/wimax/WimaxStateTracker;
-    invoke-static {v4}, Lcom/android/server/WimaxService;->access$600(Lcom/android/server/WimaxService;)Landroid/net/wimax/WimaxStateTracker;
-
-    move-result-object v4
-
-    invoke-virtual {v4, v8}, Landroid/net/wimax/WimaxStateTracker;->SetNoBackOff(Z)V
-
-    goto :goto_2
-
-
-    :cond_15
-    if-ne v1, v10, :cond_17
+    .restart local v1       #bExtra:Z
+    :cond_d
+    if-eqz v1, :cond_e
 
 
     const-string v4, "WimaxService"
@@ -850,61 +553,40 @@
     invoke-static {v6, v4}, Landroid/util/Log;->i(Ljava/lang/String;Ljava/lang/String;)I
 
 
-    iget-object v4, p0, Lcom/android/server/WimaxService$5;->this$0:Lcom/android/server/WimaxService;
-
-    iget v4, v4, Lcom/android/server/WimaxService;->m_nCallState:I
-
-    if-ne v4, v9, :cond_16
-
-
-    iget-object v4, p0, Lcom/android/server/WimaxService$5;->this$0:Lcom/android/server/WimaxService;
-
-    #getter for: Lcom/android/server/WimaxService;->mWimaxStateTracker:Landroid/net/wimax/WimaxStateTracker;
-    invoke-static {v4}, Lcom/android/server/WimaxService;->access$600(Lcom/android/server/WimaxService;)Landroid/net/wimax/WimaxStateTracker;
-
-    move-result-object v4
-
-    invoke-virtual {v4, v7}, Landroid/net/wimax/WimaxStateTracker;->SetNoBackOff(Z)V
-
-
-    :cond_16
-    :goto_4
+    :goto_3
     iget-object v4, p0, Lcom/android/server/WimaxService$5;->this$0:Lcom/android/server/WimaxService;
 
     invoke-virtual {v4}, Lcom/android/server/WimaxService;->disconnect()Z
 
-    goto :goto_3
+    goto :goto_2
 
 
-    :cond_17
+    :cond_e
     const-string v4, "WimaxService"
 
     const-string v4, "it will be disconnect to re-connect as normal mode"
 
     invoke-static {v6, v4}, Landroid/util/Log;->i(Ljava/lang/String;Ljava/lang/String;)I
 
-
-    iget-object v4, p0, Lcom/android/server/WimaxService$5;->this$0:Lcom/android/server/WimaxService;
-
-    #getter for: Lcom/android/server/WimaxService;->mWimaxStateTracker:Landroid/net/wimax/WimaxStateTracker;
-    invoke-static {v4}, Lcom/android/server/WimaxService;->access$600(Lcom/android/server/WimaxService;)Landroid/net/wimax/WimaxStateTracker;
-
-    move-result-object v4
-
-    invoke-virtual {v4, v8}, Landroid/net/wimax/WimaxStateTracker;->SetNoBackOff(Z)V
-
-    goto :goto_4
+    goto :goto_3
 
 
-    .end local v1           #nApState:I
-    :cond_18
+    .end local v1           #bExtra:Z
+    :cond_f
     const-string v4, "com.android.settings.TETHERING_WIMAX_REALM_CHANGE_ACTION"
 
     invoke-virtual {v0, v4}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
 
     move-result v4
 
-    if-eqz v4, :cond_21
+    if-eqz v4, :cond_13
+
+
+    const-string v4, "WimaxService"
+
+    const-string v4, "TETHERING_WIMAX_REALM_CHANGE_ACTION"
+
+    invoke-static {v6, v4}, Landroid/util/Log;->i(Ljava/lang/String;Ljava/lang/String;)I
 
 
     const-string v4, "tethering"
@@ -915,24 +597,7 @@
 
 
     .local v3, usbTethered:Z
-    invoke-static {}, Lcom/android/server/WimaxService;->access$1200()Z
-
-    move-result v4
-
-    if-eq v4, v3, :cond_0
-
-
-    const-string v4, "WimaxService"
-
-    const-string v4, "TETHERING_WIMAX_REALM_CHANGE_ACTION"
-
-    invoke-static {v6, v4}, Landroid/util/Log;->i(Ljava/lang/String;Ljava/lang/String;)I
-
-
     invoke-static {v3}, Lcom/android/server/WimaxService;->access$1202(Z)Z
-
-
-    invoke-virtual {p1, p2}, Landroid/content/Context;->removeStickyBroadcast(Landroid/content/Intent;)V
 
 
     iget-object v4, p0, Lcom/android/server/WimaxService$5;->this$0:Lcom/android/server/WimaxService;
@@ -942,7 +607,7 @@
 
     move-result v4
 
-    if-eqz v4, :cond_19
+    if-eqz v4, :cond_10
 
     const-string v4, "WimaxService"
 
@@ -967,20 +632,8 @@
     invoke-static {v6, v4}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
 
 
-    :cond_19
-    invoke-static {}, Lcom/android/server/WimaxService;->access$1200()Z
-
-    move-result v4
-
-    if-eqz v4, :cond_1d
-
-
-    const-string v4, "WimaxService"
-
-    const-string v4, "Tethering option is checked"
-
-    invoke-static {v6, v4}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
-
+    :cond_10
+    if-eqz v3, :cond_0
 
     iget-object v4, p0, Lcom/android/server/WimaxService$5;->this$0:Lcom/android/server/WimaxService;
 
@@ -988,159 +641,16 @@
 
     move-result v4
 
-    if-ne v4, v7, :cond_1a
+    if-ne v4, v7, :cond_0
 
 
     const-string v4, "WimaxService"
 
-    const-string v4, "discard - already tethered mode"
+    const-string v4, "discard - Already TETHERED MODE"
 
     invoke-static {v6, v4}, Landroid/util/Log;->w(Ljava/lang/String;Ljava/lang/String;)I
 
     goto/16 :goto_0
-
-
-    :cond_1a
-    iget-object v4, p0, Lcom/android/server/WimaxService$5;->this$0:Lcom/android/server/WimaxService;
-
-    #getter for: Lcom/android/server/WimaxService;->m_nPluggedType:I
-    invoke-static {v4}, Lcom/android/server/WimaxService;->access$1100(Lcom/android/server/WimaxService;)I
-
-    move-result v4
-
-    if-ne v4, v9, :cond_0
-
-    iget-object v4, p0, Lcom/android/server/WimaxService$5;->this$0:Lcom/android/server/WimaxService;
-
-    invoke-virtual {v4}, Lcom/android/server/WimaxService;->getWimaxEnabledStatus()I
-
-    move-result v4
-
-    if-ne v4, v10, :cond_0
-
-
-    iget-object v4, p0, Lcom/android/server/WimaxService$5;->this$0:Lcom/android/server/WimaxService;
-
-    invoke-virtual {v4, v7, v7}, Lcom/android/server/WimaxService;->setWimaxMode(IZ)I
-
-
-    iget-object v4, p0, Lcom/android/server/WimaxService$5;->this$0:Lcom/android/server/WimaxService;
-
-    #getter for: Lcom/android/server/WimaxService;->mWimaxStateTracker:Landroid/net/wimax/WimaxStateTracker;
-    invoke-static {v4}, Lcom/android/server/WimaxService;->access$600(Lcom/android/server/WimaxService;)Landroid/net/wimax/WimaxStateTracker;
-
-    move-result-object v4
-
-    invoke-virtual {v4}, Landroid/net/wimax/WimaxStateTracker;->clearRetryFlag()V
-
-
-    iget-object v4, p0, Lcom/android/server/WimaxService$5;->this$0:Lcom/android/server/WimaxService;
-
-    invoke-virtual {v4}, Lcom/android/server/WimaxService;->getWimaxState()Landroid/net/wimax/WimaxState;
-
-    move-result-object v4
-
-    sget-object v5, Landroid/net/wimax/WimaxState;->DISCONNECTED:Landroid/net/wimax/WimaxState;
-
-    if-ne v4, v5, :cond_1b
-
-
-    const-string v4, "WimaxService"
-
-    const-string v4, "it will connect as tethered mode"
-
-    invoke-static {v6, v4}, Landroid/util/Log;->i(Ljava/lang/String;Ljava/lang/String;)I
-
-
-    iget-object v4, p0, Lcom/android/server/WimaxService$5;->this$0:Lcom/android/server/WimaxService;
-
-    invoke-virtual {v4, v7}, Lcom/android/server/WimaxService;->startScan(Z)Z
-
-    goto/16 :goto_0
-
-
-    :cond_1b
-    iget-object v4, p0, Lcom/android/server/WimaxService$5;->this$0:Lcom/android/server/WimaxService;
-
-    invoke-virtual {v4}, Lcom/android/server/WimaxService;->getWimaxState()Landroid/net/wimax/WimaxState;
-
-    move-result-object v4
-
-    sget-object v5, Landroid/net/wimax/WimaxState;->SCANNING:Landroid/net/wimax/WimaxState;
-
-    if-eq v4, v5, :cond_1c
-
-    iget-object v4, p0, Lcom/android/server/WimaxService$5;->this$0:Lcom/android/server/WimaxService;
-
-    invoke-virtual {v4}, Lcom/android/server/WimaxService;->getWimaxState()Landroid/net/wimax/WimaxState;
-
-    move-result-object v4
-
-    sget-object v5, Landroid/net/wimax/WimaxState;->READY:Landroid/net/wimax/WimaxState;
-
-    if-eq v4, v5, :cond_1c
-
-    iget-object v4, p0, Lcom/android/server/WimaxService$5;->this$0:Lcom/android/server/WimaxService;
-
-    invoke-virtual {v4}, Lcom/android/server/WimaxService;->getWimaxState()Landroid/net/wimax/WimaxState;
-
-    move-result-object v4
-
-    sget-object v5, Landroid/net/wimax/WimaxState;->CONNECTING:Landroid/net/wimax/WimaxState;
-
-    if-eq v4, v5, :cond_1c
-
-    iget-object v4, p0, Lcom/android/server/WimaxService$5;->this$0:Lcom/android/server/WimaxService;
-
-    invoke-virtual {v4}, Lcom/android/server/WimaxService;->getWimaxState()Landroid/net/wimax/WimaxState;
-
-    move-result-object v4
-
-    sget-object v5, Landroid/net/wimax/WimaxState;->OBTAINING_IPADDR:Landroid/net/wimax/WimaxState;
-
-    if-eq v4, v5, :cond_1c
-
-    iget-object v4, p0, Lcom/android/server/WimaxService$5;->this$0:Lcom/android/server/WimaxService;
-
-    invoke-virtual {v4}, Lcom/android/server/WimaxService;->getWimaxState()Landroid/net/wimax/WimaxState;
-
-    move-result-object v4
-
-    sget-object v5, Landroid/net/wimax/WimaxState;->CONNECTED:Landroid/net/wimax/WimaxState;
-
-    if-ne v4, v5, :cond_0
-
-
-    :cond_1c
-    const-string v4, "WimaxService"
-
-    const-string v4, "it will disconnect for re-connecting as tethered mode"
-
-    invoke-static {v6, v4}, Landroid/util/Log;->i(Ljava/lang/String;Ljava/lang/String;)I
-
-
-    iget-object v4, p0, Lcom/android/server/WimaxService$5;->this$0:Lcom/android/server/WimaxService;
-
-    invoke-virtual {v4}, Lcom/android/server/WimaxService;->disconnect()Z
-
-    goto/16 :goto_0
-
-
-    :cond_1d
-    const-string v4, "WimaxService"
-
-    const-string v4, "Tethering option is unchecked"
-
-    invoke-static {v6, v4}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
-
-
-    iget-object v4, p0, Lcom/android/server/WimaxService$5;->this$0:Lcom/android/server/WimaxService;
-
-    invoke-virtual {v4}, Lcom/android/server/WimaxService;->getWimaxMode()I
-
-    move-result v4
-
-    if-ne v4, v7, :cond_20
 
 
     iget-object v4, p0, Lcom/android/server/WimaxService$5;->this$0:Lcom/android/server/WimaxService;
@@ -1154,123 +664,51 @@
 
     iget-object v4, p0, Lcom/android/server/WimaxService$5;->this$0:Lcom/android/server/WimaxService;
 
-    invoke-virtual {v4, v7, v8}, Lcom/android/server/WimaxService;->setWimaxMode(IZ)I
-
-
-    iget-object v4, p0, Lcom/android/server/WimaxService$5;->this$0:Lcom/android/server/WimaxService;
-
-    #getter for: Lcom/android/server/WimaxService;->mWimaxStateTracker:Landroid/net/wimax/WimaxStateTracker;
-    invoke-static {v4}, Lcom/android/server/WimaxService;->access$600(Lcom/android/server/WimaxService;)Landroid/net/wimax/WimaxStateTracker;
-
-    move-result-object v4
-
-    invoke-virtual {v4}, Landroid/net/wimax/WimaxStateTracker;->clearRetryFlag()V
-
-
-    iget-object v4, p0, Lcom/android/server/WimaxService$5;->this$0:Lcom/android/server/WimaxService;
-
-    invoke-virtual {v4}, Lcom/android/server/WimaxService;->getWimaxState()Landroid/net/wimax/WimaxState;
-
-    move-result-object v4
-
-    sget-object v5, Landroid/net/wimax/WimaxState;->DISCONNECTED:Landroid/net/wimax/WimaxState;
-
-    if-ne v4, v5, :cond_1e
-
-
-    const-string v4, "WimaxService"
-
-    const-string v4, "it will connect as normal mode"
-
-    invoke-static {v6, v4}, Landroid/util/Log;->i(Ljava/lang/String;Ljava/lang/String;)I
-
-
-    iget-object v4, p0, Lcom/android/server/WimaxService$5;->this$0:Lcom/android/server/WimaxService;
-
-    invoke-virtual {v4, v7}, Lcom/android/server/WimaxService;->startScan(Z)Z
-
-    goto/16 :goto_0
-
-
-    :cond_1e
-    iget-object v4, p0, Lcom/android/server/WimaxService$5;->this$0:Lcom/android/server/WimaxService;
-
-    invoke-virtual {v4}, Lcom/android/server/WimaxService;->getWimaxState()Landroid/net/wimax/WimaxState;
-
-    move-result-object v4
-
-    sget-object v5, Landroid/net/wimax/WimaxState;->SCANNING:Landroid/net/wimax/WimaxState;
-
-    if-eq v4, v5, :cond_1f
-
-    iget-object v4, p0, Lcom/android/server/WimaxService$5;->this$0:Lcom/android/server/WimaxService;
-
-    invoke-virtual {v4}, Lcom/android/server/WimaxService;->getWimaxState()Landroid/net/wimax/WimaxState;
-
-    move-result-object v4
-
-    sget-object v5, Landroid/net/wimax/WimaxState;->READY:Landroid/net/wimax/WimaxState;
-
-    if-eq v4, v5, :cond_1f
-
-    iget-object v4, p0, Lcom/android/server/WimaxService$5;->this$0:Lcom/android/server/WimaxService;
-
-    invoke-virtual {v4}, Lcom/android/server/WimaxService;->getWimaxState()Landroid/net/wimax/WimaxState;
-
-    move-result-object v4
-
-    sget-object v5, Landroid/net/wimax/WimaxState;->CONNECTING:Landroid/net/wimax/WimaxState;
-
-    if-eq v4, v5, :cond_1f
-
-    iget-object v4, p0, Lcom/android/server/WimaxService$5;->this$0:Lcom/android/server/WimaxService;
-
-    invoke-virtual {v4}, Lcom/android/server/WimaxService;->getWimaxState()Landroid/net/wimax/WimaxState;
-
-    move-result-object v4
-
-    sget-object v5, Landroid/net/wimax/WimaxState;->OBTAINING_IPADDR:Landroid/net/wimax/WimaxState;
-
-    if-eq v4, v5, :cond_1f
-
-    iget-object v4, p0, Lcom/android/server/WimaxService$5;->this$0:Lcom/android/server/WimaxService;
-
     invoke-virtual {v4}, Lcom/android/server/WimaxService;->getWimaxState()Landroid/net/wimax/WimaxState;
 
     move-result-object v4
 
     sget-object v5, Landroid/net/wimax/WimaxState;->CONNECTED:Landroid/net/wimax/WimaxState;
 
-    if-ne v4, v5, :cond_0
+    if-ne v4, v5, :cond_11
 
 
-    :cond_1f
+    if-eqz v3, :cond_12
+
+
     const-string v4, "WimaxService"
 
-    const-string v4, "it will disconnect for re-connecting as normal mode"
+    const-string v4, "it will be disconnect to re-connect as tethering mode"
 
     invoke-static {v6, v4}, Landroid/util/Log;->i(Ljava/lang/String;Ljava/lang/String;)I
 
 
+    :goto_4
     iget-object v4, p0, Lcom/android/server/WimaxService$5;->this$0:Lcom/android/server/WimaxService;
 
     invoke-virtual {v4}, Lcom/android/server/WimaxService;->disconnect()Z
 
+
+    :cond_11
+    iget-object v4, p0, Lcom/android/server/WimaxService$5;->this$0:Lcom/android/server/WimaxService;
+
+    invoke-virtual {v4, v7, v3}, Lcom/android/server/WimaxService;->setWimaxMode(IZ)I
+
     goto/16 :goto_0
 
 
-    :cond_20
+    :cond_12
     const-string v4, "WimaxService"
 
-    const-string v4, "discard - already NOT tethered mode"
+    const-string v4, "[unTether]it will be disconnect to re-connect as normal mode"
 
-    invoke-static {v6, v4}, Landroid/util/Log;->w(Ljava/lang/String;Ljava/lang/String;)I
+    invoke-static {v6, v4}, Landroid/util/Log;->i(Ljava/lang/String;Ljava/lang/String;)I
 
-    goto/16 :goto_0
+    goto :goto_4
 
 
     .end local v3           #usbTethered:Z
-    :cond_21
+    :cond_13
     const-string v4, "android.intent.action.ACTION_SHUTDOWN"
 
     invoke-virtual {v0, v4}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
@@ -1293,7 +731,7 @@
 
     move-result v4
 
-    if-eq v4, v10, :cond_22
+    if-eq v4, v10, :cond_14
 
     iget-object v4, p0, Lcom/android/server/WimaxService$5;->this$0:Lcom/android/server/WimaxService;
 
@@ -1301,17 +739,17 @@
 
     move-result v4
 
-    if-ne v4, v9, :cond_12
+    if-ne v4, v9, :cond_c
 
 
-    :cond_22
+    :cond_14
     iget-object v4, p0, Lcom/android/server/WimaxService$5;->this$0:Lcom/android/server/WimaxService;
 
     invoke-virtual {v4}, Lcom/android/server/WimaxService;->getWimaxMode()I
 
     move-result v4
 
-    if-ne v4, v7, :cond_23
+    if-ne v4, v7, :cond_15
 
 
     iget-object v4, p0, Lcom/android/server/WimaxService$5;->this$0:Lcom/android/server/WimaxService;
@@ -1319,7 +757,7 @@
     invoke-virtual {v4, v7, v8}, Lcom/android/server/WimaxService;->setWimaxMode(IZ)I
 
 
-    :cond_23
+    :cond_15
     iget-object v4, p0, Lcom/android/server/WimaxService$5;->this$0:Lcom/android/server/WimaxService;
 
     #getter for: Lcom/android/server/WimaxService;->mWimaxStateTracker:Landroid/net/wimax/WimaxStateTracker;
@@ -1330,13 +768,4 @@
     invoke-virtual {v4}, Landroid/net/wimax/WimaxStateTracker;->disconnectAndStop()Z
 
     goto/16 :goto_0
-
-
-    :pswitch_data_0
-    .packed-switch 0x1
-        :pswitch_1
-        :pswitch_0
-        :pswitch_2
-        :pswitch_1
-    .end packed-switch
 .end method
