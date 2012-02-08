@@ -1168,7 +1168,7 @@
 
     move/from16 v1, v21
 
-    if-eq v0, v1, :cond_0
+    if-eq v0, v0, :cond_0
 
     .line 286
     if-eqz v21, :cond_11
